@@ -18,6 +18,15 @@ import PurchaseList from "./pages/Products/PurchaseList";
 import EditPurchase from "./pages/Products/EditPurchase";
 import DeletePurchase from "./pages/Products/DeletePurchase";
 
+import Doctors from './pages/Doctors'
+import Login from './pages/Login'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Appointment from './pages/Appointment'
+import MyAppointments from './pages/MyAppointments'
+import MyProfile from './pages/MyProfile'
+import Verify from './pages/Verify'
+
 import Footer from "./components/Footer";
 
 const App = () => {
