@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AppContext } from '../context/AppContext'
+import AppContextProvider from '../context/AppContext'
 
 const RelatedDoctors = ({ speciality, docId }) => {
 
     const navigate = useNavigate()
-    const { doctors } = useContext(AppContext)
+    const { doctors } = useContext(AppContextProvider)
 
     const [relDoc, setRelDoc] = useState([])
 
