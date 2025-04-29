@@ -1,94 +1,45 @@
-import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import React from "react";
+import { assets } from "../assets/assets";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-6">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-          {/* INFO */}
-          <div>
-            <h3 className="text-base font-semibold mb-2">INFO</h3>
-            <p>#########</p>
-            <p>######@gmail.com</p>
-            <p>Colombo, Sri Lanka 00100</p>
-          </div>
-
-          {/* COMPANY INFORMATION */}
-          <div>
-            <h3 className="text-base font-semibold mb-2">
-              COMPANY INFORMATION
-            </h3>
-            <ul className="space-y-1">
-              <li>
-                <a href="/" className="hover:text-gray-300">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-gray-300">
-                  Our Mission
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-gray-300">
-                  News & Education
-                </a>
-              </li>
-              <li>
-                <a href="/createtickets" className="hover:text-gray-300">
-                  Contact Us
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* SUPPORT */}
-          <div>
-            <h3 className="text-base font-semibold mb-2">SUPPORT</h3>
-            <ul className="space-y-1">
-              <li>
-                <a href="#" className="hover:text-gray-300">
-                  Shipping & Returns
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-gray-300">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-gray-300">
-                  Privacy Policy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* FOLLOW US */}
-          <div>
-            <h3 className="text-base font-semibold mb-2">FOLLOW US</h3>
-            <div className="flex space-x-3">
-              <a href="#" className="hover:text-gray-300">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="hover:text-gray-300">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="hover:text-gray-300">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="hover:text-gray-300">
-                <Youtube size={20} />
-              </a>
-            </div>
-          </div>
+    <div className="md:mx-10">
+      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10  mt-40 text-sm">
+        <div>
+          <img className="w-40 mb-5" src={assets.newlogo} alt="" />
+          <p className="w-full leading-6 text-gray-600 md:w-2/3">
+          A comprehensive eye care management system designed to streamline appointments, digitalize prescriptions, 
+          and enhance patient-doctor interactions. 
+          Experience seamless, efficient, and accessible vision care at your fingertips.
+          </p>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-gray-800 text-center text-xs">
-          <p>All rights reserved ITP24R_B1_W16</p>
+        <div>
+          <p className="mb-5 text-xl font-medium">COMPANY</p>
+          <ul className="flex flex-col gap-2 text-gray-600">
+            <li>Home</li>
+            <li>About us</li>
+            <li>Delivery</li>
+            <li>Privacy policy</li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="mb-5 text-xl font-medium">GET IN TOUCH</p>
+          <ul className="flex flex-col gap-2 text-gray-600">
+            <li>+94 76 150 4268</li>
+            <li>opticare@gmail.com</li>
+          </ul>
         </div>
       </div>
-    </footer>
+
+      <div>
+        <hr />
+        <p className="py-5 text-sm text-center">
+          Copyright 2025 @ Opticare.com - All Right Reserved.
+        </p>
+      </div>
+    </div>
   );
 };
 

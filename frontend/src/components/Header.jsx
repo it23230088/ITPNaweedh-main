@@ -1,31 +1,3 @@
-// // src/components/Header.jsx
-// import { Link } from "react-router-dom";
-// import logo from "../images/logo2.png"; // Import your logo image
-
-// const Header = () => {
-//   return (
-//     <header className="bg-primary text-white p-4 text-xl">
-//       <nav className="container mx-auto flex justify-center items-center space-x-7">
-//         {/* Use space-x-4 for consistent spacing between all elements */}
-//         <img src={logo} alt="Logo" className="h-10 w-auto mr-5" />
-//         <Link to="/" className="hover:text-gray-300">
-//           Home
-//         </Link>
-
-//         <Link to="/shop" className="hover:text-gray-300">
-//           Products
-//         </Link>
-
-//         <Link to="/createtickets" className="hover:text-gray-300">
-//           Help
-//         </Link>
-//       </nav>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -133,8 +105,11 @@ const Header = () => {
             <NavLink onClick={() => setShowMenu(false)} to="/">
               <p className="inline-block px-4 py-2 rounded full">HOME</p>
             </NavLink>
+            <NavLink onClick={() => setShowMenu(false)} to="/shop">
+              <p className="inline-block px-4 py-2 rounded full">PRODUCTS</p>
+            </NavLink>
             <NavLink onClick={() => setShowMenu(false)} to="/doctors">
-              <p className="inline-block px-4 py-2 rounded full">ALL DOCTORS</p>
+              <p className="inline-block px-4 py-2 rounded full">APPOINTMENTS</p>
             </NavLink>
             <NavLink onClick={() => setShowMenu(false)} to="/about">
               <p className="inline-block px-4 py-2 rounded full">ABOUT</p>
