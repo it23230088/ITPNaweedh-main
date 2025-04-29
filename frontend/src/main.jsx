@@ -1,14 +1,16 @@
+// src/index.jsx
 import { StrictMode } from "react";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
+import AppContextProvider from "./context/AppContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <AppContext.Provider value={{ token, setToken, userData }}>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AppContextProvider>
       <App />
-    </BrowserRouter>
-  </AppContext.Provider>
+    </AppContextProvider>
+  </BrowserRouter>
 );
