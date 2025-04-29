@@ -28,7 +28,7 @@
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext.jsx";
+import { AppContext } from "../context/AppContext";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Header = () => {
           <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
         </NavLink>
         <NavLink to="/shop">
-          <li className="py-1">Products</li>
+          <li className="py-1">PRODUCTS</li>
           <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
         </NavLink>
         <NavLink to="/doctors">
