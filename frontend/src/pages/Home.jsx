@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../components/Header'
+import Hero from '../components/Hero'
 import SpecialityMenu from '../components/SpecialityMenu'
 import TopDoctors from '../components/TopDoctors'
 import Banner from '../components/Banner'
@@ -7,7 +7,7 @@ import Banner from '../components/Banner'
 const Home = () => {
   return (
     <div>
-      {/* <Header /> */}
+      <Hero />
       <SpecialityMenu />
       <TopDoctors />
       <Banner />

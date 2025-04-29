@@ -28,7 +28,7 @@ const Header = () => {
           <li className="py-1">HOME</li>
           <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
         </NavLink>
-        <NavLink to="/shop">
+        <NavLink to="/productViews">
           <li className="py-1">PRODUCTS</li>
           <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
         </NavLink>
@@ -105,7 +105,7 @@ const Header = () => {
             <NavLink onClick={() => setShowMenu(false)} to="/">
               <p className="inline-block px-4 py-2 rounded full">HOME</p>
             </NavLink>
-            <NavLink onClick={() => setShowMenu(false)} to="/shop">
+            <NavLink onClick={() => setShowMenu(false)} to="/productViews">
               <p className="inline-block px-4 py-2 rounded full">PRODUCTS</p>
             </NavLink>
             <NavLink onClick={() => setShowMenu(false)} to="/doctors">

@@ -54,78 +54,127 @@ const ProductUser = () => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-b from-blue-50 to-white min-h-screen">
-      <h1 className="text-5xl font-bold text-blue-800 mb-8 text-center mx-auto">Our Collections</h1>
-      
-      <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 mb-8">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search by product name..."
-          className="border rounded-full py-2 px-6 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-          className="border rounded-full py-2 px-6 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        >
-          <option value="">All Categories</option>
-          {[...new Set(products.map((product) => product.category))].map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+    <div className="mx-4 sm:mx-[10%]">
+      {/* Header section with title */}
+      <div className="flex flex-col items-center gap-4 py-16 text-[#262626]">
+        <h1 className="text-3xl font-medium">Our Collections</h1>
+        <p className="sm:w-1/3 text-center text-sm">
+          Simply browse through our extensive list of quality eye care products.
+        </p>
+
+        {/* Search and filter section */}
+        <div className="flex flex-col md:flex-row w-full max-w-3xl gap-4 mt-6">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by product name..."
+            className="flex-1 px-6 py-3 text-sm font-light rounded-full border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="px-6 py-3 text-sm font-light rounded-full border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary"
+          >
+            <option value="">All Categories</option>
+            {[...new Set(products.map((product) => product.category))].map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
+      {/* Products display section */}
       {loading ? (
-        <Spinner />
+        <div className="flex justify-center py-20">
+          <Spinner />
+        </div>
       ) : error ? (
-        <p className="text-red-500 text-center">{error}</p>
+        <p className="text-red-500 text-center py-20">{error}</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 gap-y-10 mb-20">
           {sortedProducts.map((product) => (
             <div
               key={product._id}
               onClick={() => handleClick(product)}
-              className={`cursor-pointer transform transition duration-300 ${
-                product.stockQuantity === 0 ? 'opacity-50' : 'hover:scale-105'
+              className={`cursor-pointer transition-all duration-300 ${
+                product.stockQuantity === 0 ? 'opacity-70' : 'hover:translate-y-[-10px]'
               }`}
             >
-              <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-2xl relative">
-                {product.stockQuantity === 0 && (
-                  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center rounded-xl">
-                    <span className="text-white text-xl font-bold">Sold Out</span>
-                  </div>
-                )}
-                <div className="flex justify-center mb-4">
+              <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="relative">
                   {product.imageUrl ? (
                     <img
                       src={`http://localhost:5555${product.imageUrl}`}
                       alt={product.name}
-                      className="w-48 h-48 object-cover rounded-lg"
+                      className="w-full h-56 object-cover"
                     />
                   ) : (
-                    <div className="w-48 h-48 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+                    <div className="w-full h-56 bg-gray-100 flex items-center justify-center text-gray-400">
                       No Image
                     </div>
                   )}
+                  {product.stockQuantity === 0 && (
+                    <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center">
+                      <span className="text-[#595959] text-lg font-medium">Sold Out</span>
+                    </div>
+                  )}
                 </div>
-                <h2 className="text-xl font-bold mb-2 text-center text-gray-800">{product.name}</h2>
-                <p className="text-blue-600 font-semibold text-center mb-1">LKR {product.price}</p>
-                <p className="text-gray-600 text-center">{product.category}</p>
-                <button 
-                  className={`mt-4 w-full bg-blue-500 text-white py-2 rounded-full transition duration-300 ${
-                    product.stockQuantity === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
-                  }`}
-                  disabled={product.stockQuantity === 0}
-                >
-                  {product.stockQuantity === 0 ? 'Sold Out' : 'View Details'}
-                </button>
+                <div className="p-4">
+                  <h2 className="text-base font-medium text-[#262626] mb-1">{product.name}</h2>
+                  <p className="text-primary font-semibold mb-2">LKR {product.price}</p>
+                  <p className="text-sm text-gray-500 mb-4">{product.category}</p>
+                  <button 
+                    className={`w-full px-8 py-3 text-sm rounded-full transition-all duration-300 ${
+                      product.stockQuantity === 0 
+                        ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                        : 'bg-primary text-white hover:scale-105'
+                    }`}
+                    disabled={product.stockQuantity === 0}
+                  >
+                    {product.stockQuantity === 0 ? 'Sold Out' : 'View Details'}
+                  </button>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+      )}
+      
+      {/* CTA section */}
+      {!loading && !error && sortedProducts.length > 0 && (
+        <div className="flex bg-primary rounded-lg px-6 sm:px-10 md:px-14 lg:px-12 my-20">
+          <div className="flex-1 py-8 sm:py-10 md:py-16 lg:py-20 lg:pl-5">
+            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-white">
+              <p>Premium Eye Care Products</p>
+              <p className="mt-4">For Your Vision Health</p>
+            </div>
+            <button className="bg-white text-sm text-[#595959] px-8 py-3 rounded-full mt-6 hover:scale-105 transition-all">
+              Shop Now
+            </button>
+          </div>
+          <div className="hidden md:block md:w-1/2 lg:w-[370px] relative">
+            {/* This would be replaced with an actual product image */}
+            <div className="w-full h-64 md:absolute bottom-0 right-0"></div>
+          </div>
+        </div>
+      )}
+      
+      {/* No products found message */}
+      {!loading && !error && sortedProducts.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-20">
+          <p className="text-lg text-gray-600 mb-6">No products found matching your criteria</p>
+          <button 
+            onClick={() => {
+              setSearchQuery('');
+              setCategoryFilter('');
+            }}
+            className="px-8 py-3 font-light text-white rounded-full bg-primary"
+          >
+            Reset Filters
+          </button>
         </div>
       )}
     </div>
