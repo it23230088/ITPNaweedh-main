@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from 'axios'
+import PropTypes from 'prop-types';
 
 export const AppContext = createContext()
 
@@ -14,7 +15,7 @@ const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
 
     // Getting Doctors using API
-    const getDoctosData = async () => {
+    const getDoctosData = useCallback(async () => {
 
         try {
 
@@ -30,10 +31,10 @@ const AppContextProvider = (props) => {
             toast.error(error.message)
         }
 
-    }
+    }, [backendUrl])
 
     // Getting User Profile using API
-    const loadUserProfileData = async () => {
+    const loadUserProfileData = useCallback(async () => {
 
         try {
 
@@ -50,17 +51,17 @@ const AppContextProvider = (props) => {
             toast.error(error.message)
         }
 
-    }
+    }, [backendUrl, token])
 
     useEffect(() => {
         getDoctosData()
-    }, [])
+    }, [getDoctosData])
 
     useEffect(() => {
         if (token) {
             loadUserProfileData()
         }
-    }, [token])
+    }, [token, loadUserProfileData])
 
     const value = {
         doctors, getDoctosData,
@@ -76,6 +77,9 @@ const AppContextProvider = (props) => {
         </AppContext.Provider>
     )
 
+}
+AppContextProvider.propTypes = {
+    children: PropTypes.node.isRequired
 }
 
 export default AppContextProvider
