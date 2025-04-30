@@ -8,8 +8,8 @@ export const AppContext = createContext()
 
 const AppContextProvider = ({ children }) => {
   const currencySymbol = 'LKR '
-//   const backendUrl = import.meta.env.VITE_BACKEND_URL
-  const backendUrl = 'http://localhost:5555'
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  // const backendUrl = 'http://localhost:5555'
   const [doctors, setDoctors] = useState([])
   const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '')
   const [userData, setUserData] = useState(false)
