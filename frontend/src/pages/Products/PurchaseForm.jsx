@@ -149,13 +149,13 @@ const CreatePurchase = () => {
     title: "Product Details",
     description: "This premium quality product is designed with comfort and style in mind. Made from high-quality materials that ensure durability and a perfect fit for any occasion.",
     features: [
-      "Premium quality fabric",
+      "Premium quality Frame",
       "Comfortable fit",
       "Durable construction",
       "Easy to maintain",
       "Perfect for casual and formal occasions"
     ],
-    careInstructions: "Machine wash cold. Tumble dry low. Do not bleach.",
+    careInstructions: "Maximum drop protection upto 5m",
     shipping: "Free shipping on orders over $50. Standard delivery in 3-5 business days."
   };
 

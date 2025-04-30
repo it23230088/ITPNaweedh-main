@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Spinner from "../../components/Spinner";
+//import jsPDF from "jspdf";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+
+import "jspdf-autotable";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+
+// Spinner fallback if you don't have a Spinner component
+const Spinner = () => (
+  <div className="flex justify-center items-center py-20">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+);
+
+const PRIMARY = "#5F6FFF";
+const PRIMARY_DARK = "#3a47b8";
+const PRIMARY_LIGHT = "#e8ebff";
 
 const PurchaseData = () => {
   const [purchases, setPurchases] = useState([]);
@@ -16,18 +29,19 @@ const PurchaseData = () => {
     least: null,
   });
 
-  const [startDate, setStartDate] = useState(""); // Start date for filter
-  const [endDate, setEndDate] = useState(""); // End date for filter
+
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     const fetchPurchases = async () => {
       setLoading(true);
       try {
         const response = await axios.get("http://localhost:5555/purchaseList");
-        // Ensure that each purchase has an approvalStatus property, default to null if not already set
         const purchasesWithStatus = response.data.data.map((purchase) => ({
           ...purchase,
-          approvalStatus: purchase.approvalStatus || null, // Set to null if no approval status
+          approvalStatus: purchase.approvalStatus || null,
         }));
         setPurchases(purchasesWithStatus);
       } catch (error) {
@@ -66,23 +80,19 @@ const PurchaseData = () => {
       purchase.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       purchase.productName.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Function to normalize the date by removing the time part
     const normalizeDate = (date) => {
       const normalizedDate = new Date(date);
-      normalizedDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to zero
+      normalizedDate.setHours(0, 0, 0, 0);
       return normalizedDate;
     };
 
-    // Convert purchaseDate and startDate/endDate to normalized Date objects for comparison
     const purchaseDate = normalizeDate(purchase.purchaseDate);
     const start = startDate ? normalizeDate(startDate) : null;
     const end = endDate ? normalizeDate(endDate) : null;
 
-    // Check if purchaseDate falls within the selected date range inclusively
     const isWithinDateRange =
       (!start || purchaseDate >= start) && (!end || purchaseDate <= end);
 
-    // Return true if both search query matches and date is within the range
     return matchesSearchQuery && isWithinDateRange;
   });
 
@@ -139,123 +149,190 @@ const PurchaseData = () => {
   };
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl my-8">Purchase List</h1>
-        <div className="flex items-center gap-4">
+    <div
+      className="min-h-screen p-6"
+      style={{
+        background: `linear-gradient(135deg, ${PRIMARY_LIGHT}, #fff 80%)`,
+      }}
+    >
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <h1
+          className="text-4xl font-bold drop-shadow mb-4 md:mb-0"
+          style={{ color: PRIMARY }}
+        >
+          Purchase List
+        </h1>
+        <div className="flex flex-wrap items-center gap-4">
           <Link to="/admin/dashboard">
-            <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+            <button
+              className="font-bold py-2 px-4 rounded-full shadow transition duration-300"
+              style={{
+                background: PRIMARY,
+                color: "#fff",
+                border: "none",
+              }}
+            >
               Admin Dashboard
             </button>
           </Link>
           <Link to="/products">
-            <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+            <button
+              className="font-bold py-2 px-4 rounded-full shadow transition duration-300 border"
+              style={{
+                background: "#fff",
+                color: PRIMARY,
+                borderColor: PRIMARY,
+              }}
+            >
               Product Management
             </button>
           </Link>
           <Link to="/productViews">
-            <button className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+            <button
+              className="font-bold py-2 px-4 rounded-full shadow transition duration-300"
+              style={{
+                background: PRIMARY,
+                color: "#fff",
+                border: "none",
+              }}
+            >
               Add Purchase
             </button>
           </Link>
         </div>
       </div>
 
-      <div className="my-4">
-        <h3 className="text-lg text-gray-600">
-          Total Purchases: {totalPurchases}
-        </h3>
-        <h3 className="text-lg text-gray-600">
-          Total Amount: LKR {totalAmount.toFixed(2)}
-        </h3>
-        <h3 className="text-lg text-gray-600">
-          Most Favorite Product: {favoriteProducts.most || "N/A"}
-        </h3>
-        <h3 className="text-lg text-gray-600">
-          Least Favorite Product: {favoriteProducts.least || "N/A"}
-        </h3>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div
+          className="bg-white rounded-2xl p-4 shadow border-l-4"
+          style={{ borderColor: PRIMARY }}
+        >
+          <h3 className="text-lg text-gray-600">Total Purchases</h3>
+          <p className="text-2xl font-bold" style={{ color: PRIMARY }}>
+            {totalPurchases}
+          </p>
+        </div>
+        <div
+          className="bg-white rounded-2xl p-4 shadow border-l-4"
+          style={{ borderColor: PRIMARY }}
+        >
+          <h3 className="text-lg text-gray-600">Total Amount</h3>
+          <p className="text-2xl font-bold" style={{ color: PRIMARY }}>
+            LKR {totalAmount.toFixed(2)}
+          </p>
+        </div>
+        <div
+          className="bg-white rounded-2xl p-4 shadow border-l-4"
+          style={{ borderColor: PRIMARY }}
+        >
+          <h3 className="text-lg text-gray-600">Most Favorite Product</h3>
+          <p className="text-xl" style={{ color: PRIMARY }}>
+            {favoriteProducts.most || "N/A"}
+          </p>
+        </div>
+        <div
+          className="bg-white rounded-2xl p-4 shadow border-l-4"
+          style={{ borderColor: PRIMARY }}
+        >
+          <h3 className="text-lg text-gray-600">Least Favorite Product</h3>
+          <p className="text-xl" style={{ color: PRIMARY }}>
+            {favoriteProducts.least || "N/A"}
+          </p>
+        </div>
       </div>
 
-      <div className="flex justify-between items-center mb-4">
+      {/* Filters */}
+      <div className="flex flex-wrap gap-4 items-center mb-6">
         <input
           type="text"
           placeholder="Search by customer name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-500 px-4 py-2 w-full max-w-xs"
+          className="border px-4 py-2 rounded-full focus:ring-2 w-full max-w-xs transition"
+          style={{
+            borderColor: PRIMARY,
+            outlineColor: PRIMARY,
+          }}
         />
-        {/* New Filter */}
         <div>
-          <label className="mr-2">From:</label>
+          <label className="mr-2" style={{ color: PRIMARY }}>
+            From:
+          </label>
           <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="border border-gray-500 px-4 py-2"
+            className="border px-4 py-2 rounded-full focus:ring-2 transition"
+            style={{
+              borderColor: PRIMARY,
+              outlineColor: PRIMARY,
+            }}
           />
         </div>
         <div>
-          <label className="mr-2">To:</label>
+          <label className="mr-2" style={{ color: PRIMARY }}>
+            To:
+          </label>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="border border-gray-500 px-4 py-2"
+            className="border px-4 py-2 rounded-full focus:ring-2 transition"
+            style={{
+              borderColor: PRIMARY,
+              outlineColor: PRIMARY,
+            }}
           />
         </div>
-        <div className="flex gap-4">
-          <button
-            onClick={downloadPDF}
-            className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded transition duration-300"
-          >
-            Download PDF
-          </button>
-        </div>
+        <button
+          onClick={downloadPDF}
+          className="font-bold py-2 px-4 rounded-full shadow transition duration-300"
+          style={{
+            background: PRIMARY,
+            color: "#fff",
+            border: "none",
+          }}
+        >
+          Download PDF
+        </button>
       </div>
+
+      {/* Table */}
       {loading ? (
         <Spinner />
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
+          <table className="min-w-full bg-white border shadow-lg rounded-xl overflow-hidden">
             <thead>
               <tr>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  No.
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Customer Name
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Phone
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Address
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Product Name
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Quantity
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Size
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Purchase Date
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Total
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Payment Slip
-                </th>
-
-                <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Operations
-                </th>
+                {[
+                  "No.",
+                  "Customer Name",
+                  "Email",
+                  "Phone",
+                  "Address",
+                  "Product Name",
+                  "Quantity",
+                  "Size",
+                  "Purchase Date",
+                  "Total",
+                  "Payment Slip",
+                  "Operations",
+                ].map((header) => (
+                  <th
+                    key={header}
+                    className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
+                    style={{
+                      background: PRIMARY,
+                      color: "#fff",
+                      borderBottom: `2px solid ${PRIMARY_LIGHT}`,
+                    }}
+                  >
+                    {header}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -297,20 +374,20 @@ const PurchaseData = () => {
                         <img
                           src={`http://localhost:5555${purchase.paymentSlipUrl}`}
                           alt="Payment"
-                          className="h-16 w-16 object-cover rounded-md"
+                          className="h-16 w-16 object-cover rounded-md border"
+                          style={{ borderColor: PRIMARY }}
                         />
                       ) : (
                         <span className="text-sm text-gray-500">No Image</span>
                       )}
                     </td>
-
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       <div className="flex justify-center gap-x-4">
                         <Link to={`/purchaseList/edit/${purchase._id}`}>
-                          <AiOutlineEdit className="text-2xl text-yellow-600" />
+                          <AiOutlineEdit style={{ color: "#FFD600", fontSize: 22 }} />
                         </Link>
                         <Link to={`/purchaseList/delete/${purchase._id}`}>
-                          <MdOutlineDelete className="text-2xl text-red-600" />
+                          <MdOutlineDelete style={{ color: "#FF1744", fontSize: 22 }} />
                         </Link>
                       </div>
                     </td>
