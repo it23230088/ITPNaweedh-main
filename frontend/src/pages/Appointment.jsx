@@ -181,7 +181,7 @@ const Appointment = () => {
             </div>
 
             {/* Listing Releated Doctors */}
-            <RelatedDoctors speciality={docInfo.speciality} docId={docId} />
+            {/* <RelatedDoctors speciality={docInfo.speciality} docId={docId} /> */}
         </div>
     ) : null
 }
