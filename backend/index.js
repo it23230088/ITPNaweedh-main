@@ -72,6 +72,9 @@ import doctorRouter from "./routes/doctorRoute.js"
 import adminRouter from "./routes/adminRoute.js"
 import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
+import warrantyRoutes from "./routes/warrantyRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import claimRoutes from "./routes/claimRoutes.js";
 
 // app config
 const app = express()
@@ -108,6 +111,10 @@ app.use("/products", productRoute);
 app.use("/productViews", productRoute);
 app.use("/productViews/purchaseForm", purchaseRoute);
 app.use("/purchaseList", purchaseRoute);
+
+app.use("/api/warranties", warrantyRoutes);
+app.use('/api/claims', claimRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Working")
