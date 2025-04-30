@@ -33,6 +33,7 @@ import AddWarranty from "./pages/AddWarranty";
 import WarrantyList from "./pages/WarrantyList";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
+import EditWarranty from "./pages/EditWarranty";
 
 const App = () => {
   return (
@@ -82,6 +83,7 @@ const App = () => {
       <Routes>
         <Route path="/warranty" element={<WarrantyList />} />
         <Route path="/warranties/add" element={<AddWarranty />} />
+        <Route path="/warranties/edit/:id" element={<EditWarranty />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>

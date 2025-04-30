@@ -37,7 +37,7 @@ const EditWarranty = () => {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:5555/api/warranties/${id}`, formData);
-      navigate('/warranties');
+      navigate('/warranty');
     } catch (error) {
       console.error('Error updating warranty:', error);
     }
