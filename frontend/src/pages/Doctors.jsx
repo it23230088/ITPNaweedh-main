@@ -117,14 +117,14 @@ const Doctors = () => {
                 </p>
 
         </div>
-        <div className="grid w-full gap-4 grid-cols-auto gap-y-6">
+        <div className="grid w-full gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-y-6">
           {filterDoc.map((item, index) => (
             <div
               onClick={() => {
                 navigate(`/appointment/${item._id}`);
                 scrollTo(0, 0);
               }}
-              className="border border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
+              className="border max-w-[300px] border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
               key={index}
             >
               <img className="bg-[#EAEFFF]" src={item.image} alt="" />
