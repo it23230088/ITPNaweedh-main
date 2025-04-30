@@ -10,6 +10,8 @@ import CreateProducts from "./pages/Products/CreateProducts";
 import DeleteProduct from "./pages/Products/DeleteProduct";
 import EditProduct from "./pages/Products/EditProduct";
 import ShowProduct from "./pages/Products/ShowProduct";
+import PaymentPage from "./pages/PaymentPage";
+
 
 import LandingPage from "./pages/Products/LandingPage";
 import ProductView from "./pages/Products/ProductUser";
@@ -58,6 +60,7 @@ const App = () => {
         <Route path="/sendEmail" element={<PurchaseList />} />
         <Route path="/purchaseList/edit/:id" element={<EditPurchase />} />
         <Route path="/purchaseList/delete/:id" element={<DeletePurchase />} />
+        <Route path="/payment" element={<PaymentPage />} />
       </Routes>
 
       {/* aaqib */}
