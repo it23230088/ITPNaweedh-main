@@ -62,6 +62,8 @@
 
 import express from "express"
 import cors from 'cors'
+import { fileURLToPath } from "url";
+import path from "path";
 import 'dotenv/config'
 import connectDB from "./config/mongodb.js"
 import connectCloudinary from "./config/cloudinary.js"
@@ -80,6 +82,21 @@ connectCloudinary()
 // middlewares
 app.use(express.json())
 app.use(cors())
+
+// Setup for ES module __dirname equivalent
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files
+app.use(
+  "/uploads/productImage",
+  express.static(path.join(__dirname, "uploads/productImage"))
+);
+
+app.use(
+  "/uploads/purchasePayment",
+  express.static(path.join(__dirname, "uploads/purchasePayment"))
+);
 
 // api endpoints
 app.use("/api/user", userRouter)
