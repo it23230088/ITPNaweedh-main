@@ -1,0 +1,271 @@
+.virtual-glasses-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .webcam-control {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .form-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .form-switch i {
+    position: relative;
+    display: inline-block;
+    margin-right: 0.5rem;
+    width: 46px;
+    height: 26px;
+    background-color: #e6e6e6;
+    border-radius: 23px;
+    vertical-align: text-bottom;
+    transition: all 0.3s linear;
+  }
+  
+  .form-switch i::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 42px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+    transition: all 0.25s linear;
+  }
+  
+  .form-switch i::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+    transform: translate3d(2px, 2px, 0);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .form-switch:active i::after {
+    width: 28px;
+    transform: translate3d(2px, 2px, 0);
+  }
+  
+  .form-switch:active input:checked + i::after {
+    transform: translate3d(16px, 2px, 0);
+  }
+  
+  .form-switch input {
+    display: none;
+  }
+  
+  .form-switch input:checked + i {
+    background-color: #4BD763;
+  }
+  
+  .form-switch input:checked + i::before {
+    transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
+  }
+  
+  .form-switch input:checked + i::after {
+    transform: translate3d(22px, 2px, 0);
+  }
+  
+  .container-area {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    height: 480px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  .webcam-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .webcam-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .image-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #3399cc;
+  }
+  
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+  
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .spinner-border {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+    margin-top: 10px;
+  }
+  
+  @keyframes spinner-border {
+    to { transform: rotate(360deg); }
+  }
+  
+  .glasses-slider {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 30;
+  }
+  
+  .arrow-left,
+  .arrow-right {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+  
+  .glasses-list-container {
+    width: calc(100% - 80px);
+    overflow: hidden;
+    margin: 0 10px;
+  }
+  
+  .glasses-list {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    transition: margin-left 0.3s;
+  }
+  
+  .glasses-list li {
+    flex: 0 0 auto;
+    width: 80px;
+    height: 60px;
+    margin: 0 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .glasses-list li img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .glasses-list li.selected-glasses {
+    border-color: #4BD763;
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .error-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .error-message button {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container-area {
+      height: 60vw;
+    }
+    
+    .glasses-list li {
+      width: 60px;
+      height: 45px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container-area {
+      height: 75vw;
+    }
+    
+    .glasses-list li {
+      width: 50px;
+      height: 38px;
+    }
+  }

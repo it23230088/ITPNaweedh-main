@@ -24,7 +24,7 @@ const CreatePurchase = () => {
 
   // Initialize particles
   useEffect(() => {
-    const particlesScript = document.createElement('script');
+    const particlesScript = document.createElement("script");
     particlesScript.innerHTML = `
       function createParticles() {
         const container = document.getElementById('particles-container');
@@ -108,21 +108,22 @@ const CreatePurchase = () => {
 
   const handleARTryNow = () => {
     // Placeholder for AR functionality
-    alert("AR Try-on feature coming soon!");
+    // alert("AR Try-on feature coming soon!");
     // In a real implementation, this would launch the AR experience
+    window.location.href = "http://localhost:5174";
   };
 
   const handleBuyNow = () => {
     // Navigate to customer information page
-    navigate("/payment", { 
-      state: { 
-        productName, 
-        totalPrice, 
+    navigate("/payment", {
+      state: {
+        productName,
+        totalPrice,
         quantity,
         selectedSize,
         productImage,
-        productPrice
-      } 
+        productPrice,
+      },
     });
   };
 
@@ -147,23 +148,25 @@ const CreatePurchase = () => {
   // Sample product description - you should replace this with actual product data
   const productDescription = {
     title: "Product Details",
-    description: "This premium quality product is designed with comfort and style in mind. Made from high-quality materials that ensure durability and a perfect fit for any occasion.",
+    description:
+      "This premium quality product is designed with comfort and style in mind. Made from high-quality materials that ensure durability and a perfect fit for any occasion.",
     features: [
       "Premium quality Frame",
       "Comfortable fit",
       "Durable construction",
       "Easy to maintain",
-      "Perfect for casual and formal occasions"
+      "Perfect for casual and formal occasions",
     ],
     careInstructions: "Maximum drop protection upto 5m",
-    shipping: "Free shipping on orders over $50. Standard delivery in 3-5 business days."
+    shipping:
+      "Free shipping on orders over $50. Standard delivery in 3-5 business days.",
   };
 
   return (
     <div className="p-4 bg-gradient-to-br from-[#F8F9FF] to-[#E6E9FF] min-h-screen relative">
       {/* Particles container */}
       <div id="particles-container"></div>
-      
+
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden relative z-10">
         <div className="flex flex-col md:flex-row">
           {/* Product Image Section */}
@@ -180,8 +183,19 @@ const CreatePurchase = () => {
                     onClick={handleARTryNow}
                     className="absolute bottom-4 right-4 bg-white text-[#5F6FFF] font-semibold py-2 px-4 rounded-full shadow-md hover:bg-[#5F6FFF] hover:text-white transition-all duration-300 flex items-center space-x-2"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
                     </svg>
                     <span>Try in AR</span>
                   </button>
@@ -195,7 +209,9 @@ const CreatePurchase = () => {
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h2 className="text-3xl font-bold text-gray-800">{productName}</h2>
+                    <h2 className="text-3xl font-bold text-gray-800">
+                      {productName}
+                    </h2>
                     <p className="text-2xl font-bold text-[#5F6FFF] mt-2">
                       LKR {productPrice.toFixed(2)}
                     </p>
@@ -204,7 +220,7 @@ const CreatePurchase = () => {
                     In Stock
                   </div>
                 </div>
-                
+
                 <div className="mt-4">
                   <p className="text-gray-700 mb-2 font-medium">Select Size:</p>
                   <div className="flex space-x-2">
@@ -217,7 +233,7 @@ const CreatePurchase = () => {
                 <div className="mt-4">
                   <p className="text-gray-700 mb-2 font-medium">Quantity:</p>
                   <div className="flex items-center space-x-3">
-                    <button 
+                    <button
                       className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-700 hover:bg-[#5F6FFF] hover:text-white transition-colors"
                       onClick={() => quantity > 1 && setQuantity(quantity - 1)}
                     >
@@ -241,7 +257,7 @@ const CreatePurchase = () => {
                       min="1"
                       max={maxQuantity || undefined}
                     />
-                    <button 
+                    <button
                       className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-700 hover:bg-[#5F6FFF] hover:text-white transition-colors"
                       onClick={() => setQuantity(quantity + 1)}
                     >
@@ -265,8 +281,10 @@ const CreatePurchase = () => {
 
           {/* Product Description Section - Replacing Customer Information */}
           <div className="w-full md:w-1/2 p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Product Description</h2>
-            
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              Product Description
+            </h2>
+
             <div className="space-y-6">
               <div className="bg-[#F8F9FF] p-6 rounded-lg border border-[#E6E9FF]">
                 <p className="text-gray-700 leading-relaxed">
@@ -275,12 +293,24 @@ const CreatePurchase = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Key Features</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                  Key Features
+                </h3>
                 <ul className="space-y-2">
                   {productDescription.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
-                      <svg className="h-5 w-5 text-[#5F6FFF] mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      <svg
+                        className="h-5 w-5 text-[#5F6FFF] mr-2 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span className="text-gray-700">{feature}</span>
                     </li>
@@ -289,17 +319,19 @@ const CreatePurchase = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Care Instructions</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                  Care Instructions
+                </h3>
                 <p className="text-gray-700 bg-[#F0F2FF] p-4 rounded-lg">
                   {productDescription.careInstructions}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Shipping Information</h3>
-                <p className="text-gray-700">
-                  {productDescription.shipping}
-                </p>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                  Shipping Information
+                </h3>
+                <p className="text-gray-700">{productDescription.shipping}</p>
               </div>
 
               <div className="mt-8 flex flex-col space-y-4">
@@ -308,12 +340,23 @@ const CreatePurchase = () => {
                   onClick={handleBuyNow}
                   className="w-full bg-[#5F6FFF] text-white py-4 px-6 rounded-lg hover:bg-[#4F5FEF] transition-colors duration-300 text-lg font-semibold shadow-md flex items-center justify-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
                   </svg>
                   Buy Now
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={() => navigate("/productViews")}
